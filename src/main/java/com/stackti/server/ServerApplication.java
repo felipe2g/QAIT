@@ -19,64 +19,66 @@ public class ServerApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// Cria banco de dados Usuário
-
-		jdbc.update("alter table question drop constraint fk_correct_answer;");
-
-		jdbc.execute("DROP TABLE IF EXISTS tags_at_question");
-		jdbc.execute("DROP TABLE IF EXISTS answer");
-		jdbc.execute("DROP TABLE IF EXISTS question");
-		jdbc.execute("DROP TABLE IF EXISTS tag");
-		jdbc.execute("drop table \"user\";");
-
-
+		jdbc.execute("DROP TABLE IF EXISTS \"user\" CASCADE");
+		System.out.println("SUCCESS: Table user DELETED!");
 		jdbc.execute("""
             CREATE TABLE "user" (
-            user_id serial,
-            firstName varchar(20),
+            user_id SERIAL,
+            first_name varchar(20),
             last_name varchar(20),
             email varchar(50),
             password varchar(30),
-            role int,
+            role int DEFAULT 0,
             job_title varchar(30),
-            rate int,
-            created_at Date,
-            updated_at Date,
+            rate int DEFAULT 5,
+            created_at TIMESTAMP DEFAULT NOW(),
+            updated_at TIMESTAMP DEFAULT NOW(),
             PRIMARY KEY(user_id));
         """);
+		System.out.println("SUCCESS: Table user CREATED!");
 
 		// Cria banco de dados de tag
+		jdbc.execute("DROP TABLE IF EXISTS tag CASCADE");
+		System.out.println("SUCCESS: Table tag DELETED!");
 		jdbc.execute("""
             CREATE TABLE tag(
-            tag_id serial,
+            tag_id SERIAL,
             name varchar(20),
             PRIMARY KEY(tag_id));
         """);
+		System.out.println("SUCCESS: Table tag CREATED!");
 
 		// Cria banco de dados questão
+		jdbc.execute("DROP TABLE IF EXISTS question CASCADE");
+		System.out.println("SUCCESS: Table question DELETED!");
 		jdbc.execute("""
             CREATE TABLE question(
-            question_id serial,
+            question_id SERIAL,
             title varchar(120),
             question_description varchar(255),
             visits int,
             question_data Date,
             rate int,
-            created_at Date,
-            updated_at Date,
+            created_at TIMESTAMP DEFAULT NOW(),
+            updated_at TIMESTAMP DEFAULT NOW(),
             author_id int,
             correct_answer_id int,
             PRIMARY KEY(question_id),
             CONSTRAINT fk_author FOREIGN KEY(author_id) REFERENCES "user" (user_id)
             );
         """);
+		System.out.println("SUCCESS: Table question CREATED!");
 
 		// Cria banco de dados resposta
+		jdbc.execute("DROP TABLE IF EXISTS answer CASCADE");
+		System.out.println("SUCCESS: Table answer DELETED!");
 		jdbc.execute("""
   			CREATE TABLE answer(
-  				answer_id serial,
+  				answer_id SERIAL,
   				question_id int,
   				answer_description varchar (255),
-  				data Date,
+  				created_at TIMESTAMP DEFAULT NOW(),
+  				updated_at TIMESTAMP DEFAULT NOW(),
   				author_id int,
   				rate int,
   				PRIMARY KEY(answer_id),
@@ -84,16 +86,26 @@ public class ServerApplication implements CommandLineRunner {
   				CONSTRAINT fk_question FOREIGN KEY(question_id) REFERENCES question(question_id)
   			);
 		""");
+		System.out.println("SUCCESS: Table answer CREATED!");
 
+		jdbc.execute("DROP TABLE IF EXISTS tags_at_question CASCADE");
+		System.out.println("SUCCESS: Table tags_at_question DELETED!");
 		jdbc.execute("""
   			CREATE TABLE tags_at_question(
-  				question_id serial,
+  				question_id int,
   				tag_id int,
   				PRIMARY KEY(question_id, tag_id),
   				CONSTRAINT fk_question FOREIGN KEY(question_id) REFERENCES question(question_id),
   				CONSTRAINT fk_tag FOREIGN KEY(tag_id) REFERENCES tag(tag_id)
   			);
 		""");
+		System.out.println("SUCCESS: Table tags_at_question CREATED!");
+
+		jdbc.execute("""
+			ALTER TABLE question
+			DROP CONSTRAINT IF EXISTS fk_correct_answer;
+		""");
+		System.out.println("SUCCESS: Table Constraint question(fk_correct_answer) DELETED!");
 
 		jdbc.execute("""
 			ALTER TABLE question
@@ -101,10 +113,12 @@ public class ServerApplication implements CommandLineRunner {
 				FOREIGN KEY(correct_answer_id)
 				REFERENCES answer(answer_id);
 		""");
+		System.out.println("SUCCESS: Constraint question(fk_correct_answer) CREATED!");
 
 		jdbc.update(""" 
-			insert into "user" ( firstname, last_name, email, password, role, job_title, rate, created_at, updated_at)
-   			values ('SAMUEL','LUCAS', '2003SAMUELLUCAS','1234',0,'DEV',0,'2022-11-19',null);
+			insert into "user" (first_name, last_name, email, password, role, job_title)
+   			values ('Admin', 'Foo', 'admin@stackti.com','admin', 1, 'Admin');
 		""");
+		System.out.println("SUCCESS: User admin CREATED!");
 	}
 }
