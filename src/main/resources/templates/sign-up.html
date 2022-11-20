@@ -2,12 +2,12 @@
 <html lang="pt-BR" th:include="fragments/model :: model">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
+    <title>Cadastrar - Stackti</title>
 </head>
 <body>
     <main th:fragment="content">
-        <h1>Register</h1>
-        <form method="post" th:object="${user}" action="novo">
+        <h1>Cadastrar</h1>
+        <form method="post" th:object="${user}" action="sign-up">
             <div class="form-group">
                 <label for="firstName">Primeiro Nome</label>
                 <input
@@ -17,6 +17,7 @@
                     placeholder="Primeiro nome"
                     th:field="*{firstName}"
                     required
+                    value="Usuário"
                 >
 
                 <label for="secondName">Segundo Nome</label>
@@ -27,6 +28,7 @@
                     placeholder="Segundo nome"
                     th:field="*{lastName}"
                     required
+                    value="Comum"
                 >
 
                 <label for="email">Email</label>
@@ -37,6 +39,7 @@
                     placeholder="Email"
                     th:field="*{email}"
                     required
+                    value="usuario@email.com"
                 >
 
                 <label for="password">Senha</label>
@@ -47,6 +50,7 @@
                     placeholder="Senha"
                     th:field="*{password}"
                     required
+                    value="123"
                 >
 
                 <label for="passwordAgain">Senha novamente</label>.
@@ -56,6 +60,7 @@
                     id="passwordAgain"
                     placeholder="Senha Novamente"
                     required
+                    value="123"
                 >
             </div>
             <button class="btn btn-primary">Registrar</button>

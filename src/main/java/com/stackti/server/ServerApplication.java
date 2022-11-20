@@ -26,7 +26,7 @@ public class ServerApplication implements CommandLineRunner {
             user_id SERIAL,
             first_name varchar(20),
             last_name varchar(20),
-            email varchar(50),
+            email varchar(50) UNIQUE,
             password varchar(30),
             role int DEFAULT 0,
             job_title varchar(30),
@@ -57,7 +57,7 @@ public class ServerApplication implements CommandLineRunner {
             title varchar(120),
             question_description varchar(255),
             visits int,
-            data Date,
+            question_date Date,
             rate int,
             created_at TIMESTAMP DEFAULT NOW(),
             updated_at TIMESTAMP DEFAULT NOW(),
@@ -115,6 +115,22 @@ public class ServerApplication implements CommandLineRunner {
 		""");
 		System.out.println("SUCCESS: Constraint question(fk_correct_answer) CREATED!");
 
+		// Cria banco de dados de authentication
+		jdbc.execute("DROP TABLE IF EXISTS authentication CASCADE");
+		System.out.println("SUCCESS: Table authentication DELETED!");
+		jdbc.execute("""
+            CREATE TABLE authentication(
+				authentication_id SERIAL,
+				user_id int,
+				hash varchar(200),
+				created_at TIMESTAMP DEFAULT NOW(),
+				PRIMARY KEY(authentication_id),
+				CONSTRAINT fk_authentication_user_id FOREIGN KEY(user_id) REFERENCES "user"(user_id)
+            );
+        """);
+		System.out.println("SUCCESS: Table authentication CREATED!");
+
+		// Default Data
 		jdbc.update(""" 
 			insert into "user" (first_name, last_name, email, password, role, job_title)
    			values ('Admin', 'Foo', 'admin@stackti.com','admin', 1, 'Admin');
