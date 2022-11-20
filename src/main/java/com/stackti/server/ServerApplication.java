@@ -19,10 +19,19 @@ public class ServerApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// Cria banco de dados Usuário
-		jdbc.execute("DROP TABLE IF EXISTS user");
+
+		jdbc.update("alter table question drop constraint fk_correct_answer;");
+
+		jdbc.execute("DROP TABLE IF EXISTS tags_at_question");
+		jdbc.execute("DROP TABLE IF EXISTS answer");
+		jdbc.execute("DROP TABLE IF EXISTS question");
+		jdbc.execute("DROP TABLE IF EXISTS tag");
+		jdbc.execute("drop table \"user\";");
+
+
 		jdbc.execute("""
             CREATE TABLE "user" (
-            user_id int,
+            user_id serial,
             firstName varchar(20),
             last_name varchar(20),
             email varchar(50),
@@ -36,23 +45,21 @@ public class ServerApplication implements CommandLineRunner {
         """);
 
 		// Cria banco de dados de tag
-		jdbc.execute("DROP TABLE IF EXISTS tag");
 		jdbc.execute("""
             CREATE TABLE tag(
-            tag_id int,
+            tag_id serial,
             name varchar(20),
             PRIMARY KEY(tag_id));
         """);
 
 		// Cria banco de dados questão
-		jdbc.execute("DROP TABLE IF EXISTS question");
 		jdbc.execute("""
             CREATE TABLE question(
-            question_id int,
+            question_id serial,
             title varchar(120),
             question_description varchar(255),
             visits int,
-            data Date,
+            question_data Date,
             rate int,
             created_at Date,
             updated_at Date,
@@ -64,10 +71,9 @@ public class ServerApplication implements CommandLineRunner {
         """);
 
 		// Cria banco de dados resposta
-		jdbc.execute("DROP TABLE IF EXISTS answer");
 		jdbc.execute("""
   			CREATE TABLE answer(
-  				answer_id int,
+  				answer_id serial,
   				question_id int,
   				answer_description varchar (255),
   				data Date,
@@ -79,10 +85,9 @@ public class ServerApplication implements CommandLineRunner {
   			);
 		""");
 
-		jdbc.execute("DROP TABLE IF EXISTS tags_at_question");
 		jdbc.execute("""
   			CREATE TABLE tags_at_question(
-  				question_id int,
+  				question_id serial,
   				tag_id int,
   				PRIMARY KEY(question_id, tag_id),
   				CONSTRAINT fk_question FOREIGN KEY(question_id) REFERENCES question(question_id),
@@ -95,6 +100,11 @@ public class ServerApplication implements CommandLineRunner {
 				ADD CONSTRAINT fk_correct_answer
 				FOREIGN KEY(correct_answer_id)
 				REFERENCES answer(answer_id);
+		""");
+
+		jdbc.update(""" 
+			insert into "user" ( firstname, last_name, email, password, role, job_title, rate, created_at, updated_at)
+   			values ('SAMUEL','LUCAS', '2003SAMUELLUCAS','1234',0,'DEV',0,'2022-11-19',null);
 		""");
 	}
 }
