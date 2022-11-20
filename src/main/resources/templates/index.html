@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br" th:include="fragments/model :: model">
+
+<body>
+  <main th:fragment="content">
+      <section th:each="list : ${lista}">
+        <div class="flex-container1">
+            <div th:text="${list.author.firstName}"></div>
+            <div th:text="${list.dataFormat()}"></div>
+        </div>
+        <div>
+          <div th:text="${list.title}"></div>
+        </div>
+        <div>
+          <div th:text="${list.question_description}"></div>
+        </div>
+        <a href="#">Responder</a>
+      </section>
+  </main>
+</body>
+</html>

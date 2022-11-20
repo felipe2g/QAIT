@@ -23,6 +23,11 @@ public class Question {
     private User author;
     private int correct_answer_id;
 
+    public String dataFormat() {
+        return new String(new SimpleDateFormat("dd/MM/yyyy").format(data));
+    }
 }
+
+
 
 

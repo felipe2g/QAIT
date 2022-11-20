@@ -3,11 +3,11 @@
 <body>
   <main th:fragment="content">
     <form action="/questioNew" method="post" th:object="${question}">
-      <label>Titulo:</label>
-      <input type="text" th:field="*{title}">
-      <label>Pergunta:</label>
-      <textarea name="" id="" cols="30" rows="10" th:field="*{question_description}"></textarea>
-      <input type="submit" value="Enviar">
+      <label class="form-label mt-3">Titulo:</label>
+      <input type="text" class="form-control" th:field="*{title}">
+      <label class="form-label mt-3" >Pergunta:</label>
+      <textarea class="form-control" name="" id="exampleFormControlTextarea1" cols="30" rows="10" th:field="*{question_description}"></textarea>
+      <input type="submit" value="Enviar" class="btn btn-primary mt-3">
     </form>
   </main>
 </body>
