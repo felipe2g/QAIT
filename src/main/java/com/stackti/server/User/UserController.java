@@ -20,6 +20,7 @@ public class UserController {
 
     @PostMapping("/sign-up")
     public String postSignUp(User user) {
+        //TODO: Criar regra para não criar usuários repetidos
         userRepository.create(user);
         return "redirect:/login";
     }

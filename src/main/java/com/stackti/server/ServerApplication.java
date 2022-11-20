@@ -55,7 +55,7 @@ public class ServerApplication implements CommandLineRunner {
             CREATE TABLE question(
             question_id SERIAL,
             title varchar(120),
-            question_description varchar(255),
+            question_description varchar,
             visits int,
             question_date Date,
             rate int,
