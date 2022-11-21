@@ -31,8 +31,8 @@ public class ServerApplication implements CommandLineRunner {
             role int DEFAULT 0,
             job_title varchar(30),
             rate int DEFAULT 5,
-            created_at TIMESTAMP DEFAULT NOW(),
-            updated_at TIMESTAMP DEFAULT NOW(),
+            created_us TIMESTAMP DEFAULT now(),
+            updated_us TIMESTAMP DEFAULT now(),
             PRIMARY KEY(user_id));
         """);
 		System.out.println("SUCCESS: Table user CREATED!");
@@ -55,9 +55,9 @@ public class ServerApplication implements CommandLineRunner {
             CREATE TABLE question(
             question_id SERIAL,
             title varchar(120),
-            question_description varchar(255),
+            question_description varchar,
             visits int,
-            question_data Date,
+            question_data timestamp,
             rate int,
             created_at TIMESTAMP DEFAULT NOW(),
             updated_at TIMESTAMP DEFAULT NOW(),
@@ -120,5 +120,13 @@ public class ServerApplication implements CommandLineRunner {
    			values ('Admin', 'Foo', 'admin@stackti.com','admin', 1, 'Admin');
 		""");
 		System.out.println("SUCCESS: User admin CREATED!");
+		jdbc.update("""
+			insert into question (title, question_description,author_id,question_data)
+   			values ('Lorem','It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).',1,'2022-11-19');
+		""");
+		jdbc.update("""
+			insert into question (title, question_description,author_id,question_data)
+   			values ('Lorem','It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).',1,'2022-11-18');
+		""");
 	}
 }

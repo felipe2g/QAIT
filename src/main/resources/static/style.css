@@ -1,0 +1,20 @@
+
+main {
+    width: 1000px;
+    margin: auto;
+}
+.flex-container1 {
+    display: flex;
+    justify-content: space-between;
+    background-color: DodgerBlue;
+}
+
+#questions {
+    margin: 10px 0;
+    border-bottom: 1px solid black;
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+
+

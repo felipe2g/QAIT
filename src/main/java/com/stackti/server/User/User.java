@@ -4,9 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
+
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
     public Long user_id;
     public String firstName;
@@ -15,6 +18,7 @@ public class User {
     public String password;
     public int role;
     public String jobTitle;
-    public int points;
-    public int reputation;
+    public int rate;
+    private Timestamp createdAt;
+    private Timestamp updateAt;
 }
