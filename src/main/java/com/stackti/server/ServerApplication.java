@@ -115,21 +115,6 @@ public class ServerApplication implements CommandLineRunner {
 		""");
 		System.out.println("SUCCESS: Constraint question(fk_correct_answer) CREATED!");
 
-		// Cria banco de dados de authentication
-		jdbc.execute("DROP TABLE IF EXISTS authentication CASCADE");
-		System.out.println("SUCCESS: Table authentication DELETED!");
-		jdbc.execute("""
-            CREATE TABLE authentication(
-				authentication_id SERIAL,
-				user_id int,
-				hash varchar(200),
-				created_at TIMESTAMP DEFAULT NOW(),
-				PRIMARY KEY(authentication_id),
-				CONSTRAINT fk_authentication_user_id FOREIGN KEY(user_id) REFERENCES "user"(user_id)
-            );
-        """);
-		System.out.println("SUCCESS: Table authentication CREATED!");
-
 		// Default Data
 		jdbc.update(""" 
 			insert into "user" (first_name, last_name, email, password, role, job_title)
