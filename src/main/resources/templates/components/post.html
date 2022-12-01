@@ -3,7 +3,7 @@
 <div class="card" th:fragment="post (name, body, rate, vote)">
   <div class="card-body">
     <div class="row g-0">
-      <div th:replace="components/vote :: vote (rate, vote)"></div>
+      <div th:replace="components/vote :: vote (${rate}, ${vote})"></div>
       <div class="col ps-3">
         <p class="card-text" th:text="${body}"></p>
       </div>
