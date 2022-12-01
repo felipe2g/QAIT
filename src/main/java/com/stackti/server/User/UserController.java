@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
@@ -20,8 +21,13 @@ public class UserController {
 
     @PostMapping("/sign-up")
     public String postSignUp(User user) {
-        //TODO: Criar regra para não criar usuários repetidos
+        // TODO: Criar regra para não criar usuários repetidos
         userRepository.create(user);
         return "redirect:/login";
+    }
+
+    @GetMapping("/profile")
+    public String getProfile() {
+        return "profile";
     }
 }
