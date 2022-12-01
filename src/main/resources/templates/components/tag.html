@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<!--<ul th:replace="components/tag :: tag (${tagList})"></ul>-->
+<ul class="list-inline mb-0 pb-1" th:fragment="tag (tagList)">
+    <li
+        class="list-inline-item badge bg-info m-0"
+        th:each="tag : ${tagList}"
+        th:text="${tag}"
+    ></li>
+</ul>
+</html>

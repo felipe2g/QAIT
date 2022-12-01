@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<div class="card" th:fragment="post (name, body, rate, vote)">
+  <div class="card-body">
+    <div class="row g-0">
+      <div th:replace="components/vote :: vote (rate, vote)"></div>
+      <div class="col ps-3">
+        <p class="card-text" th:text="${body}"></p>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <p class="card-text">
+      Posted by
+      <a class="card-link link-info" href="http://localhost:8080" th:text="${name}"></a>
+    </p>
+  </div>
+</div>
+</html>
