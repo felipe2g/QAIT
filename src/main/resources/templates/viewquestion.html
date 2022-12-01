@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" th:include="fragments/model :: model">
-
+st
 <body>
     <main th:fragment="content">
-        <p th:text="${q.title}"></p>
+        <section class="d-flex align-self-stretch questionView">
+            <div class="questionUser p-2" style="width: 60%" >
+                <p>por <b th:text="${q.author.firstName}"></b> > </p>
+            </div>
+            <div class="p-2 p" >
+                <h2 th:text="${q.title}"></h2>
+                <p>por <span th:text="${q.author.firstName}"></span> > <span th:text="${q.dataFormat}"></span></p>
+                <div th:text="${q.question_description}"></div>
+            </div>
+        </section>
     </main>
 </body>
 </html>
