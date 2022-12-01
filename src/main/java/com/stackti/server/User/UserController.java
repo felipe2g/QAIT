@@ -1,6 +1,5 @@
 package com.stackti.server.User;
 
-import com.stackti.server.Login.Login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +19,13 @@ public class UserController {
 
     @PostMapping("/sign-up")
     public String postSignUp(User user) {
-        //TODO: Criar regra para não criar usuários repetidos
+        // TODO: Criar regra para não criar usuários repetidos
         userRepository.create(user);
         return "redirect:/login";
+    }
+
+    @GetMapping("/profile")
+    public String getProfile() {
+        return "profile";
     }
 }
