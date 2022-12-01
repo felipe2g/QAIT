@@ -1,0 +1,47 @@
+@startuml
+class User {
+    +user_id
+    first_name
+    last_name
+    email
+    password
+    role
+    job_title
+    rate
+    created_at
+    updated_at
+}
+class Tag {
+    +tag_id
+    name
+}
+class Question {
+    +question_id
+    title
+    body
+    view_count
+    score
+    created_at
+    updated_at
+}
+class QuestionVote {
+    vote
+}
+class Answer {
+    +answer_id
+    body
+    score
+    created_at
+    updated_at
+}
+class AnswerVote {
+    vote
+}
+User "1" - "n" Question
+(User, Question) "1" .. "n" QuestionVote
+User "1" -- "n" Answer
+(User, Answer) "1" .. "n" AnswerVote
+Question "1" -- "n" Answer
+Question "n" -- "n" Tag
+Question "1" -- "1" Question : correct_answer
+@enduml
