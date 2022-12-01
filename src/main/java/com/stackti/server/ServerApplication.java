@@ -88,10 +88,10 @@ public class ServerApplication implements CommandLineRunner {
 		""");
 		System.out.println("SUCCESS: Table answer CREATED!");
 
-		jdbc.execute("DROP TABLE IF EXISTS tags_at_question CASCADE");
-		System.out.println("SUCCESS: Table tags_at_question DELETED!");
+		jdbc.execute("DROP TABLE IF EXISTS question_tag CASCADE");
+		System.out.println("SUCCESS: Table question_tag DELETED!");
 		jdbc.execute("""
-  			CREATE TABLE tags_at_question(
+  			CREATE TABLE question_tag(
   				question_id int,
   				tag_id int,
   				PRIMARY KEY(question_id, tag_id),
@@ -99,7 +99,7 @@ public class ServerApplication implements CommandLineRunner {
   				CONSTRAINT fk_tag FOREIGN KEY(tag_id) REFERENCES tag(tag_id)
   			);
 		""");
-		System.out.println("SUCCESS: Table tags_at_question CREATED!");
+		System.out.println("SUCCESS: Table question_tag CREATED!");
 
 		jdbc.execute("""
 			ALTER TABLE question
