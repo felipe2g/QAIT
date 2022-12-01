@@ -1,68 +1,56 @@
 <!DOCTYPE html>
-<html lang="pt-BR" th:include="fragments/model :: model">
+<html lang="pt-BR" th:include="fragments/model :: model" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Register</title>
+  <meta charset="UTF-8">
+  <title>Cadastrar - Stackti</title>
 </head>
+
 <body>
-    <main th:fragment="content">
-        <h1>Register</h1>
-        <form method="post" th:object="${user}" action="novo">
-            <div class="form-group">
-                <label for="firstName">Primeiro Nome</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    id="firstName"
-                    placeholder="Primeiro nome"
-                    th:field="*{firstName}"
-                    required
-                >
-
-                <label for="secondName">Segundo Nome</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    id="secondName"
-                    placeholder="Segundo nome"
-                    th:field="*{lastName}"
-                    required
-                >
-
-                <label for="email">Email</label>
-                <input
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    placeholder="Email"
-                    th:field="*{email}"
-                    required
-                >
-
-                <label for="password">Senha</label>
-                <input
-                    type="password"
-                    class="form-control"
-                    id="password"
-                    placeholder="Senha"
-                    th:field="*{password}"
-                    required
-                >
-
-                <label for="passwordAgain">Senha novamente</label>.
-                <input
-                    type="password"
-                    class="form-control"
-                    id="passwordAgain"
-                    placeholder="Senha Novamente"
-                    required
-                >
+  <main th:fragment="content">
+    <div class="d-flex justify-content-center">
+      <form class="w-50" method="post" th:object="${user}" action="sign-up">
+        <h1 class="my-3">Cadastrar</h1>
+        <div class="form-group">
+          <div class="d-flex flex-row">
+            <div class="w-50">
+              <label for="firstName">Primeiro Nome</label>
+              <input type="text" class="form-control" id="firstName" placeholder="Primeiro nome" th:field="*{firstName}"
+                required value="Usuário">
             </div>
-            <button class="btn btn-primary">Registrar</button>
-        </form>
-    </main>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+            <div class="w-50 ms-2">
+              <label for="secondName">Segundo Nome</label>
+              <input type="text" class="form-control" id="secondName" placeholder="Segundo nome" th:field="*{lastName}"
+                required value="Comum">
+            </div>
+          </div>
+
+
+          <label for="email" class="mt-2">Email</label>
+          <input type="email" class="form-control" id="email" placeholder="Email" th:field="*{email}" required
+            value="usuario@email.com">
+
+          <label for="password" class="mt-2">Senha</label>
+          <input type="password" class="form-control" id="password" placeholder="Senha" th:field="*{password}" required
+            value="123">
+
+          <label for="passwordAgain" class="mt-2">Senha novamente</label>.
+          <input type="password" class="form-control" id="passwordAgain" placeholder="Senha Novamente" required
+            value="123">
+        </div>
+        <button class="btn btn-primary mt-2">Registrar</button>
+      </form>
+    </div>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>

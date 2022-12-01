@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,6 +18,6 @@ public class User {
     public int role;
     public String jobTitle;
     public int rate;
-    private Timestamp createdAt;
-    private Timestamp updateAt;
+    public Timestamp createAt;
+    public Timestamp updateAt;
 }
