@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br" th:include="fragments/model :: model">
+<html lang="pt-br" th:include="fragments/model :: model" xmlns:th="http://www.thymeleaf.org">
 
 <body>
   <main th:fragment="content">
@@ -7,13 +7,13 @@
           <div th:each="list : ${lista}" id="questions" >
               <div class="flex-container1">
                   <div><b>Author: </b><span th:text="${list.author.firstName}"></span></div>
-                  <div><b>Data: <span th:text="${list.dataFormat()}"></span></b></div>
+                  <div><b>Data: <span th:text="${list.getDate}"></span></b></div>
               </div>
               <div>
                   <div th:text="${list.title}"></div>
               </div>
               <div>
-                  <div th:text="${list.question_description}"></div>
+                  <div th:text="${list.body}"></div>
               </div>
               <a th:href="@{/question(id=*{list.question_id})}" class="btn btn-secondary">Responder</a>
           </div>

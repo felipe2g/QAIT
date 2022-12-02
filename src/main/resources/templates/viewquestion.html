@@ -9,8 +9,8 @@ st
             </div>
             <div class="p-2 p" >
                 <h2 th:text="${q.title}"></h2>
-                <p>por <span th:text="${q.author.firstName}"></span> > <span th:text="${q.dataFormat}"></span></p>
-                <div th:text="${q.question_description}"></div>
+                <p>por <span th:text="${q.author.firstName}"></span> > <span th:text="${q.getDate}"></span></p>
+                <div th:text="${q.body}"></div>
             </div>
         </section>
     </main>

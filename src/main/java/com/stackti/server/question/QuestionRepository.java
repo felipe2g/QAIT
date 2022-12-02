@@ -18,18 +18,19 @@ public class QuestionRepository {
     JdbcTemplate db;
 
     public void questionInsert(Question question) {
-        db.update("insert into question (title, question_description, visits, question_data, rate, created_at, updated_at, author_id,correct_answer_id) values (?,?,?,?,?,?,?,?,?);",
-                question.getTitle(),question.getQuestion_description(),question.getVisits(), Timestamp.valueOf(question.getData()),question.getRate(),question.getCreated_at(),question.getUpdated_at(),1,null);
+        db.update(
+                "insert into question (title, body, view_count, score, updated_at, author_id,correct_answer_id) values (?,?,?,?,?,?,?);",
+                question.getTitle(), question.getBody(), question.getView_count(), 
+                question.getScore(), question.getUpdated_at(), 1, null);
     }
 
     public Question all(ResultSet res, int nowNum) throws SQLException {
         Question qt = new Question(
                 res.getInt("question_id"),
                 res.getString("title"),
-                res.getString("question_description"),
-                res.getInt("visits"),
-                res.getTimestamp("question_data").toLocalDateTime(),
-                res.getInt("rate"),
+                res.getString("body"),
+                res.getInt("view_count"),
+                res.getInt("score"),
                 res.getTimestamp("created_at"),
                 res.getTimestamp("updated_at"),
                 new User(
@@ -43,13 +44,17 @@ public class QuestionRepository {
                         res.getInt("rate"),
                         res.getTimestamp("created_us"),
                         res.getTimestamp("updated_us")),
-                1);
+                0);
         return qt;
     }
-    public  Question questionById(int cod) {
-        return db.queryForObject("select * from question q join \"user\" u on author_id=user_id where question_id = ? ", this::all, cod);
+
+    public Question questionById(int cod) {
+        return db.queryForObject("select * from question q join \"user\" u on author_id=user_id where question_id = ? ",
+                this::all, cod);
     }
+
     public List<Question> allQuestionsByDate() {
-        return db.query("select * from question q join \"user\" u on author_id=user_id order by q.question_data desc;", this::all);
+        return db.query("select * from question q join \"user\" u on author_id=user_id order by q.created_at desc;",
+                this::all);
     }
 }

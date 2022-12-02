@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+
 import java.util.List;
 
 @Controller
@@ -32,7 +32,6 @@ public class QuestionController {
     }
     @PostMapping("questioNew")
     public String questioNew(Question question) {
-        question.setData(LocalDateTime.now());
         repository.questionInsert(question);
         return "redirect:/questionNew";
     }
