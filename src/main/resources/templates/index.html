@@ -1,14 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Página inicial</title>
-</head>
-
-<body>
-    <h1>Página inicial</h1>
-    <p th:text="|Bem vindo, ${user.firstName } ${user.lastName} !|">Bem vindo, visitante.</p>
-</body>
-
+<html
+    lang="en"
+    th:include="fragments/model :: model"
+    xmlns:th="http://www.thymeleaf.org"
+>
+<main class="container" th:fragment="content">
+  <h1>Página inicial</h1>
+  <div
+      th:replace="components/post :: post (${body}, ${user}, ${rate}, ${vote})"
+  ></div>
+  <div
+      th:replace="components/post :: post (${body}, ${user}, ${rate}, ${vote})"
+  ></div>
+  <div
+      th:replace="components/post :: post (${body}, ${user}, ${rate}, ${vote})"
+  ></div>
+  <div
+      th:replace="components/post :: post (${body}, ${user}, ${rate}, ${vote})"
+  ></div>
+  <div
+      th:replace="components/post :: post (${body}, ${user}, ${rate}, ${vote})"
+  ></div>
+  <div
+      th:replace="components/post :: post (${body}, ${user}, ${rate}, ${vote})"
+  ></div>
+</main>
 </html>

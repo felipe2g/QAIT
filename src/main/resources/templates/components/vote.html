@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-<div
-    class="d-flex flex-column"
-    style="width: 40px"
-    th:fragment="vote (rate, vote)"
->
-  <button class="btn p-0" th:styleappend="${vote == 1} ? 'color: #157347'">
-    <svg height="36" width="36">
-      <path d="M2 25h32L18 9 2 25Z" fill="currentColor"></path>
-    </svg>
-  </button>
-  <span class="text-center" th:text="${rate}"></span>
-  <button class="btn p-0" th:styleappend="${vote == -1} ? 'color: #dc3545'">
-    <svg height="36" width="36">
-      <path d="M2 11h32L18 27 2 11Z" fill="currentColor" />
-    </svg>
-  </button>
-</div>
+  <div
+      class="d-flex flex-column"
+      style="width: 40px"
+      th:fragment="vote (rate, vote)"
+  >
+    <button class="btn p-0" th:styleappend="${vote == 1} ? 'color: #157347'">
+      <svg height="36" width="36">
+        <path d="M2 25h32L18 9 2 25Z" fill="currentColor"></path>
+      </svg>
+    </button>
+    <span class="text-center" th:text="${rate}"></span>
+    <button class="btn p-0" th:styleappend="${vote == -1} ? 'color: #dc3545'">
+      <svg height="36" width="36">
+        <path d="M2 11h32L18 27 2 11Z" fill="currentColor" />
+      </svg>
+    </button>
+  </div>
 </html>
