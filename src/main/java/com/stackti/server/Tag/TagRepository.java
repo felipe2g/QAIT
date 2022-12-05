@@ -25,8 +25,4 @@ public class TagRepository {
     public void save(Tag tag) {
         jdbc.update("INSERT INTO tag (name) VALUES (?)", tag.getName());
     }
-
-    public void delete(int id) {
-        jdbc.update("DELETE FROM tag WHERE tag_id = ?", id);
-    }
 }

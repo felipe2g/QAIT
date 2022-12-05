@@ -23,8 +23,4 @@ public class TagService {
     public void save(Tag tag) {
         tagRepository.save(tag);
     }
-
-    public void delete(int id) {
-        tagRepository.delete(id);
-    }
 }
