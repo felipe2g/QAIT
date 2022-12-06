@@ -6,23 +6,8 @@
 >
 <main class="container" th:fragment="content">
   <h1>Página inicial</h1>
-  <div
-      th:replace="components/post :: post (${body}, ${user}, ${rate}, ${vote})"
-  ></div>
-  <div
-      th:replace="components/post :: post (${body}, ${user}, ${rate}, ${vote})"
-  ></div>
-  <div
-      th:replace="components/post :: post (${body}, ${user}, ${rate}, ${vote})"
-  ></div>
-  <div
-      th:replace="components/post :: post (${body}, ${user}, ${rate}, ${vote})"
-  ></div>
-  <div
-      th:replace="components/post :: post (${body}, ${user}, ${rate}, ${vote})"
-  ></div>
-  <div
-      th:replace="components/post :: post (${body}, ${user}, ${rate}, ${vote})"
-  ></div>
+  <div th:each="answear : ${answears}">
+    <div th:replace="components/post :: post (${answear})"></div>
+  </div>
 </main>
 </html>

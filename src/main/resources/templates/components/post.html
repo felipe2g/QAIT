@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-<div class="card" th:fragment="post (body, user, rate, vote)">
+<div class="card" th:fragment="post (Post)">
   <div class="card-body">
     <div class="row g-0">
-      <div th:replace="components/vote :: vote (${rate}, ${vote})"></div>
+      <div th:replace="components/vote :: vote (${Post})"></div>
       <div class="col ps-3">
-        <p class="card-text" th:text="${body}"></p>
+        <p class="card-text" th:text="${Post.body}"></p>
       </div>
     </div>
   </div>
@@ -15,7 +15,7 @@
       <a
           class="card-link link-info"
           href="http://localhost:8080"
-          th:text="${user}"
+          th:text="${Post.author.firstName}"
       ></a>
     </p>
   </div>

@@ -11,11 +11,12 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Answear {
-    private long answear_id;
+    private Long answear_id;
     private long question_id;
     private User author;
     private String body;
     private int score;
+    private int viewerVote;
     private Timestamp answearCreatedAt;
     private Timestamp answearUpdatedAt;
 }

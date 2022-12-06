@@ -19,16 +19,26 @@ public class AnswearRepository {
 
     public Answear rowMapper(ResultSet rs, int rowNum) throws SQLException {
         Answear answear = BeanPropertyRowMapper.newInstance(Answear.class).mapRow(rs, rowNum);
-        if (answear != null) answear.setAuthor(BeanPropertyRowMapper.newInstance(User.class).mapRow(rs, rowNum));
+        if (answear != null) {
+            answear.setAuthor(BeanPropertyRowMapper.newInstance(User.class).mapRow(rs, rowNum));
+            answear.setViewerVote(rs.getInt("vote"));
+        }
+        System.out.println(answear);
         return answear;
     }
 
-    public List<Answear> findAllByQuestionId(int question_id) {
-        return jdbc.query("SELECT * FROM answear join \"user\" u on u.user_id = author_id WHERE question_id = ?", this::rowMapper, question_id);
+    public List<Answear> findAllByQuestionIdAndViewerId(int question_id, int viewer_id) {
+        return jdbc.query("SELECT a.answear_id answear_id, * FROM answear a join \"user\" u on u.user_id = author_id left join answear_vote av on a.answear_id = av.answear_id and av.user_id = ? WHERE question_id = ?", this::rowMapper, viewer_id, question_id);
     }
 
-    public void vote(int vote, long id) {
-        jdbc.update("UPDATE answear SET score = score + ? WHERE answear_id = ?", vote, id);
+    public void vote(int vote, long user_id, long answear_id) {
+        try {
+            jdbc.update("INSERT INTO answear_vote (user_id, answear_id, vote) VALUES (?, ?, ?)", user_id, answear_id, vote);
+        } catch (Exception e) {
+            jdbc.update("UPDATE answear_vote SET vote = ? WHERE user_id = ? and answear_id = ?", vote, user_id, answear_id);
+        } finally {
+            jdbc.update("UPDATE answear SET score = score + ? WHERE answear_id = ?", vote, answear_id);
+        }
     }
 
     public void save(Answear answear) {

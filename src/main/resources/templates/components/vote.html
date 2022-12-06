@@ -3,15 +3,15 @@
   <div
       class="d-flex flex-column"
       style="width: 40px"
-      th:fragment="vote (rate, vote)"
+      th:fragment="vote (Post)"
   >
-    <button class="btn p-0" th:styleappend="${vote == 1} ? 'color: #157347'">
+    <button class="btn p-0 upvote" th:classappend="${Post.viewerVote == 1} ? 'text-success'">
       <svg height="36" width="36">
         <path d="M2 25h32L18 9 2 25Z" fill="currentColor"></path>
       </svg>
     </button>
-    <span class="text-center" th:text="${rate}"></span>
-    <button class="btn p-0" th:styleappend="${vote == -1} ? 'color: #dc3545'">
+    <span class="text-center score" th:text="${Post.score}"></span>
+    <button class="btn p-0 downvote" onclick="vote()" th:classappend="${Post.viewerVote == -1} ? 'text-danger'">
       <svg height="36" width="36">
         <path d="M2 11h32L18 27 2 11Z" fill="currentColor" />
       </svg>
