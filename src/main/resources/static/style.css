@@ -1,7 +1,4 @@
-* {
-    margin: 0;
-    box-sizing: border-box;
-}
+
 main {
     width: 1000px;
     margin: auto;
@@ -12,12 +9,6 @@ main {
     background-color: DodgerBlue;
 }
 
-#questions {
-    margin: 10px 0;
-    border-bottom: 1px solid black;
-    padding: 10px 0;
-    cursor: pointer;
-}
 .questionUser {
     border-right: 1px solid gray;
 }
@@ -26,6 +17,12 @@ main {
     border: 1px solid black;
     border-radius: 10px;
     margin-top: 10px;
+}
+
+.verde {
+    color: white;
+    border-color:rgb(48, 164, 48) !important;
+    background-color: rgb(48, 164, 48);
 }
 
 

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.stackti.server.answer.AnswerRepository;
 
 import java.util.List;
 
@@ -12,8 +13,10 @@ import java.util.List;
 public class QuestionController {
     @Autowired
     QuestionRepository repository;
-
-    @GetMapping("questionNew")
+    @Autowired
+    AnswerRepository answer;
+    
+    @GetMapping("question-new")
     public String question(Model model) {
         model.addAttribute("question", new Question());
         return "question";
@@ -21,18 +24,20 @@ public class QuestionController {
     @GetMapping("/question")
     public String questionView(@RequestParam(value = "id", required = true)Integer cod, Model model) {
         Question qt = repository.questionById(cod);
+        repository.updateVisitInQuestion(cod);
         model.addAttribute("q",qt);
         return "viewquestion";
     }
-    @GetMapping("home")
+    @GetMapping("/")
     public String allQuestion(Model model) {
         List<Question> list = repository.allQuestionsByDate();
         model.addAttribute("lista", list);
+        model.addAttribute("answer", answer);
         return "index";
     }
-    @PostMapping("questioNew")
+    @PostMapping("question-new")
     public String questioNew(Question question) {
         repository.questionInsert(question);
-        return "redirect:/questionNew";
+        return "redirect:/question-new";
     }
 }

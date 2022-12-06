@@ -1,18 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" th:include="fragments/model :: model">
-st
+<html lang="pt-br" th:include="fragments/model :: model">
+
 <body>
     <main th:fragment="content">
-        <section class="d-flex align-self-stretch questionView">
-            <div class="questionUser p-2" style="width: 60%" >
-                <p>por <b th:text="${q.author.firstName}"></b> > </p>
-            </div>
-            <div class="p-2 p" >
-                <h2 th:text="${q.title}"></h2>
-                <p>por <span th:text="${q.author.firstName}"></span> > <span th:text="${q.getDate}"></span></p>
-                <div th:text="${q.body}"></div>
-            </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 th:text="${q.title}" class="my-4"></h1>
+            <a href="question-new" class="btn btn-dark">Faça uma pergunta</a>
+        </div>
+        <p class="border-bottom pb-2" style="font-size: 12px;">Pergunta há <span
+                th:text="${q.differenceBetweenDates}"></span> atrás</p>
+
+
+
+        <section class="d-flex align-self-stretch ">
+            <div th:utext="${q.body}" class="px-4"><strong></strong></div>
+            <input type="checkbox" name="fdsdsd" value="skadlasd" id="">
         </section>
     </main>
 </body>
+
 </html>
