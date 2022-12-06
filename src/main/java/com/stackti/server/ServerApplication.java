@@ -67,7 +67,7 @@ public class ServerApplication {
 					    score                       int       DEFAULT 0,
 					    answear_count               int       DEFAULT 0,
 					    question_created_at         TIMESTAMP DEFAULT NOW(),
-					    question_update_atd         TIMESTAMP DEFAULT NOW(),
+					    question_updated_at          TIMESTAMP DEFAULT NOW(),
 					    PRIMARY KEY (question_id),
 					    CONSTRAINT fk_user FOREIGN KEY (author_id) REFERENCES "user" (user_id)
 					);

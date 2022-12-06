@@ -1,9 +1,12 @@
 package com.stackti.server.Question;
 
+import com.stackti.server.User.User;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -14,20 +17,26 @@ public class QuestionRepository {
         this.jdbc = jdbc;
     }
 
-    public List<Question> findAllSortedByDate() {
-        return jdbc.query("select * from question order by created_at desc;", new BeanPropertyRowMapper<>(Question.class));
+    public Question rowMapper(ResultSet rs, int rowNum) throws SQLException {
+        Question question = BeanPropertyRowMapper.newInstance(Question.class).mapRow(rs, rowNum);
+        if (question != null) question.setAuthor(BeanPropertyRowMapper.newInstance(User.class).mapRow(rs, rowNum));
+        return question;
     }
 
-    public Question find(long id) {
-        return jdbc.queryForObject("select * from question where question_id = ? ", new BeanPropertyRowMapper<>(Question.class), id);
+    public List<Question> findAllSortedByDate() {
+        return jdbc.query("select * from question join \"user\" u on u.user_id = question.author_id order by created_at desc;", this::rowMapper);
+    }
+
+    public Question findById(long id) {
+        return jdbc.queryForObject("select * from question join \"user\" u on u.user_id = question.author_id where question_id = ? ", this::rowMapper, id);
     }
 
     public void save(Question question) {
-        jdbc.update("insert into question (title, body, author_id) values (?, ?, ?);", question.getTitle(), question.getBody(), question.getAuthor_id());
+        jdbc.update("insert into question (title, body, author_id) values (?, ?, ?);", question.getTitle(), question.getBody(), question.getAuthor().getUser_id());
     }
 
     public void update(Question question) {
-        jdbc.update("update question set title = ?, body = ?, correct_answer_id = ?, updated_at = now() where question_id = ?", question.getTitle(), question.getBody(), question.getCorrect_answear_id(), question.getQuestion_id());
+        jdbc.update("update question set title = ?, body = ?, correct_answear_id = ?, question_created_at = now() where question_id = ?", question.getTitle(), question.getBody(), question.getCorrect_answear_id(), question.getQuestion_id());
     }
 
     public void delete(long id) {

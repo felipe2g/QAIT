@@ -23,12 +23,11 @@ public class AnswearRepository {
             answear.setAuthor(BeanPropertyRowMapper.newInstance(User.class).mapRow(rs, rowNum));
             answear.setViewerVote(rs.getInt("vote"));
         }
-        System.out.println(answear);
         return answear;
     }
 
     public List<Answear> findAllByQuestionIdAndViewerId(int question_id, int viewer_id) {
-        return jdbc.query("SELECT a.answear_id answear_id, * FROM answear a join \"user\" u on u.user_id = author_id left join answear_vote av on a.answear_id = av.answear_id and av.user_id = ? WHERE question_id = ?", this::rowMapper, viewer_id, question_id);
+        return jdbc.query("SELECT * FROM answear a join \"user\" u on u.user_id = author_id left join answear_vote av on a.answear_id = av.answear_id and av.user_id = ? WHERE question_id = ?", this::rowMapper, viewer_id, question_id);
     }
 
     public void vote(int vote, long user_id, long answear_id) {
