@@ -1,10 +1,7 @@
-
 function url(flag) {
     redirectUrl = "/question?id=" + flag;
     window.open(redirectUrl, "_self");
 }
-
-
 
 tinymce.init({
     selector: '#mytextarea',

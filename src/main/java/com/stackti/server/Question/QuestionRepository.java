@@ -24,11 +24,23 @@ public class QuestionRepository {
     }
 
     public List<Question> findAllSortedByDate() {
-        return jdbc.query("select * from question join \"user\" u on u.user_id = question.author_id order by created_at desc;", this::rowMapper);
+        return jdbc.query("select * from question join \"user\" u on u.user_id = question.author_id order by question_updated_at desc;", this::rowMapper);
     }
 
     public Question findById(long id) {
         return jdbc.queryForObject("select * from question join \"user\" u on u.user_id = question.author_id where question_id = ? ", this::rowMapper, id);
+    }
+
+    public Long findQuestionIdByAnswearId(long id) {
+        return jdbc.queryForObject("select question_id from answear where answear_id = ?", Long.class, id);
+    }
+
+    public void updateVisitCount(long id) {
+        jdbc.update("UPDATE question SET view_count = view_count+1 WHERE question_id = ?;", id);
+    }
+
+    public void updateAnswearCount(long id) {
+        jdbc.update("UPDATE question SET answear_count = answear_count+1 WHERE question_id = ?;", id);
     }
 
     public void save(Question question) {

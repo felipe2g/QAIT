@@ -1,19 +1,19 @@
 package com.stackti.server;
 
-import com.stackti.server.Answear.AnswearRepository;
+import com.stackti.server.Question.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class Post {
+public class Index {
     @Autowired
-    AnswearRepository answearRepository;
+    QuestionRepository repository;
 
-    @GetMapping("/post")
+    @GetMapping("")
     public String index(Model model) {
-        model.addAttribute("answears", answearRepository.findAllByQuestionIdAndViewerId(1, 2));
+        model.addAttribute("lista", repository.findAllSortedByDate());
         return "index";
     }
 }

@@ -1,4 +1,4 @@
-package com.stackti.server.Tag;
+package com.stackti.server.Question.Tag;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

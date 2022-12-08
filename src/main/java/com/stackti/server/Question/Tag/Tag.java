@@ -1,4 +1,4 @@
-package com.stackti.server.Tag;
+package com.stackti.server.Question.Tag;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

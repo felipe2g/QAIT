@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html lang="pt-br" th:include="fragments/model :: model">
-<body>
-  <main th:fragment="content">
-    <form action="/question-new" method="post" th:object="${question}">
-      <label class="form-label mt-3">Titulo:</label>
-      <input type="text" class="form-control" th:field="*{title}" required>
-      <label class="form-label mt-3" >Pergunta:</label>
-      
-      <textarea id="mytextarea" th:field="*{body}"></textarea>
-    
-      <input type="submit" value="Enviar" class="btn btn-primary mt-3">
-    </form>
-  </main>
-</body>
+<html
+    lang="pt-br"
+    th:include="fragments/model :: model"
+    xmlns:th="http://www.thymeleaf.org"
+>
+<main th:fragment="content">
+  <form action="/question/new" method="post" th:object="${question}">
+    <input th:field="*{author.user_id}" type="hidden" />
+    <label class="form-label mt-3">Titulo:</label>
+    <input class="form-control" required th:field="*{title}" type="text" />
+
+    <label class="form-label mt-3">Pergunta:</label>
+    <textarea id="mytextarea" th:field="*{body}"></textarea>
+
+    <input class="btn btn-primary mt-3" type="submit" value="Enviar" />
+  </form>
+</main>
 </html>

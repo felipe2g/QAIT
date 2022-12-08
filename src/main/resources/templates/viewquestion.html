@@ -1,22 +1,30 @@
 <!DOCTYPE html>
-<html lang="pt-br" th:include="fragments/model :: model">
+<html
+    lang="pt-br"
+    th:include="fragments/model :: model"
+    xmlns:th="http://www.thymeleaf.org"
+>
+<main th:fragment="content">
+  <section>
+    <h1 class="my-4" th:text="${question.title}"></h1>
+    <p class="border-bottom pb-2" style="font-size: 12px">
+      Pergunta há
+      <span th:text="${question.differenceBetweenDates}"></span> atrás
+    </p>
+  </section>
 
-<body>
-    <main th:fragment="content">
-        <div class="d-flex justify-content-between align-items-center">
-            <h1 th:text="${q.title}" class="my-4"></h1>
-            <a href="question-new" class="btn btn-dark">Faça uma pergunta</a>
-        </div>
-        <p class="border-bottom pb-2" style="font-size: 12px;">Pergunta há <span
-                th:text="${q.differenceBetweenDates}"></span> atrás</p>
+  <div class="border-bottom pb-2" th:utext="${question.body}"></div>
 
+  <form action="/answear/new" method="post" th:object="${newAnswear}">
+    <input th:field="*{author.user_id}" type="hidden" />
+    <input th:field="*{question_id}" type="hidden" />
+    <label class="form-label mt-3">Your Answer</label>
+    <textarea id="mytextarea" th:field="*{body}"></textarea>
+    <input class="btn btn-primary mt-3" type="submit" value="Enviar" />
+  </form>
 
-
-        <section class="d-flex align-self-stretch ">
-            <div th:utext="${q.body}" class="px-4"><strong></strong></div>
-            <input type="checkbox" name="fdsdsd" value="skadlasd" id="">
-        </section>
-    </main>
-</body>
-
+  <div th:each="answear : ${answears}">
+    <div th:replace="components/answear :: answear (${answear})"></div>
+  </div>
+</main>
 </html>

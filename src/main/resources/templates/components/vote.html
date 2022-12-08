@@ -3,18 +3,26 @@
   <div
       class="d-flex flex-column"
       style="width: 40px"
-      th:fragment="vote (Post)"
+      th:fragment="vote (answear)"
   >
-    <button class="btn p-0 upvote" th:classappend="${Post.viewerVote == 1} ? 'text-success'">
+    <a
+        class="btn p-0"
+        th:classappend="${answear.viewerVote == 1} ? 'text-success'"
+        th:href="@{/answear/vote/(answear_id=${answear.answear_id},user_id=1,vote=1)}"
+    >
       <svg height="36" width="36">
         <path d="M2 25h32L18 9 2 25Z" fill="currentColor"></path>
       </svg>
-    </button>
-    <span class="text-center score" th:text="${Post.score}"></span>
-    <button class="btn p-0 downvote" onclick="vote()" th:classappend="${Post.viewerVote == -1} ? 'text-danger'">
+    </a>
+    <span class="text-center score" th:text="${answear.score}"></span>
+    <a
+        class="btn p-0"
+        th:classappend="${answear.viewerVote == -1} ? 'text-danger'"
+        th:href="@{/answear/vote/(answear_id=${answear.answear_id},user_id=1,vote=-1)}"
+    >
       <svg height="36" width="36">
         <path d="M2 11h32L18 27 2 11Z" fill="currentColor" />
       </svg>
-    </button>
+    </a>
   </div>
 </html>

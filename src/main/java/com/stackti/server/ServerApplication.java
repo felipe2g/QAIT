@@ -127,26 +127,7 @@ public class ServerApplication {
 					insert into "user" (first_name, last_name, email, password, job_title)
 					values ('John', 'Doe', 'jhon@gmail.com', '123', 'Developer'),
 						   ('Jane', 'Doe', 'jane@gmail.com', '123', 'Developer'),
-						   ('Jack', 'Doe', 'jack@gmail.com', '123', 'Developer');
-										
-					insert into tag (name)
-					values ('postgres');
-										
-					insert into question (author_id, title, body)
-					values (1, 'How to create a table in postgresql?', 'I want to create a table in postgresql, but I don''t know how to do it.');
-										
-					insert into question_tag (question_id, tag_id)
-					values (1, 1);
-										
-					insert into answear (question_id, author_id, body)
-					values (1, 2, 'You can create a table like this: CREATE TABLE table_name (column_name data_type);'),
-						   (1, 3, 'idk');
-										
-					insert into question_vote (question_id, user_id, vote)
-					values (1, 2, 1);
-										
-					insert into answear_vote (answear_id, user_id, vote)
-					values (1, 3, 1);""");
+						   ('Jack', 'Doe', 'jack@gmail.com', '123', 'Developer');""");
 			return "Success";
 		} catch (Exception e) {
 			return "Failed: " + e.getMessage();

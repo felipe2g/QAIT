@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-<div class="card" th:fragment="post (Post)">
+<div class="card" th:fragment="answear (post)">
   <div class="card-body">
     <div class="row g-0">
-      <div th:replace="components/vote :: vote (${Post})"></div>
+      <div th:replace="components/vote :: vote (${post})"></div>
       <div class="col ps-3">
-        <p class="card-text" th:text="${Post.body}"></p>
+        <div class="card-text" th:utext="${post.body}"></div>
       </div>
     </div>
   </div>
@@ -14,8 +14,8 @@
       Posted by
       <a
           class="card-link link-info"
-          href="http://localhost:8080"
-          th:text="${Post.author.firstName}"
+          th:href="@{'/user/'+${post.author.user_id}}"
+          th:text="${post.author.firstName}"
       ></a>
     </p>
   </div>
