@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
     public Long user_id;
     public String firstName;

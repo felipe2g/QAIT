@@ -42,8 +42,8 @@ public class ServerApplication {
 					    role       int       DEFAULT 0,
 					    job_title  varchar(30),
 					    rate       int       DEFAULT 5,
-					    created_at TIMESTAMP DEFAULT NOW(),
-					    updated_at TIMESTAMP DEFAULT NOW(),
+					    created_us TIMESTAMP DEFAULT NOW(),
+					    updated_us TIMESTAMP DEFAULT NOW(),
 					    PRIMARY KEY (user_id)
 					);
 
