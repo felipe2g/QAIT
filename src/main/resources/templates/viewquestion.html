@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html
+    lang="pt-br"
+    th:include="fragments/model :: model"
+    xmlns:th="http://www.thymeleaf.org"
+>
+<main th:fragment="content">
+  <section>
+    <h1 class="my-4" th:text="${question.title}"></h1>
+    <p class="border-bottom pb-2" style="font-size: 12px">
+      Pergunta há
+      <span th:text="${question.differenceBetweenDates}"></span> atrás
+    </p>
+  </section>
+
+  <div class="border-bottom pb-2" th:utext="${question.body}"></div>
+
+  <form action="/answear/new" method="post" th:object="${newAnswear}">
+    <input th:field="*{author.user_id}" type="hidden" />
+    <input th:field="*{question_id}" type="hidden" />
+    <label class="form-label mt-3">Your Answer</label>
+    <textarea id="mytextarea" th:field="*{body}"></textarea>
+    <input class="btn btn-primary mt-3" type="submit" value="Enviar" />
+  </form>
+
+  <div th:each="answear : ${answears}">
+    <div th:replace="components/answear :: answear (${answear})"></div>
+  </div>
+</main>
+</html>

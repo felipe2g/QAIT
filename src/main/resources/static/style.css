@@ -1,0 +1,25 @@
+main {
+    width: 1000px;
+    margin: auto;
+}
+.flex-container1 {
+    display: flex;
+    justify-content: space-between;
+    background-color: DodgerBlue;
+}
+
+.questionUser {
+    border-right: 1px solid gray;
+}
+
+.questionView {
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.verde {
+    color: white;
+    border-color:rgb(48, 164, 48) !important;
+    background-color: rgb(48, 164, 48);
+}

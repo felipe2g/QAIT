@@ -23,6 +23,14 @@ public class ServerApplication {
 	public String resetdb() {
 		try {
 			jdbc.execute("""
+					 DO $$ DECLARE
+					   r RECORD;
+					 BEGIN
+					   FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = current_schema()) LOOP
+						 EXECUTE 'DROP TABLE ' || quote_ident(r.tablename) || ' CASCADE';
+					   END LOOP;
+					 END $$;
+					     
 					DROP TABLE IF EXISTS "user" CASCADE;
 					CREATE TABLE "user"
 					(
@@ -34,8 +42,8 @@ public class ServerApplication {
 					    role       int       DEFAULT 0,
 					    job_title  varchar(30),
 					    rate       int       DEFAULT 5,
-					    created_at TIMESTAMP DEFAULT NOW(),
-					    updated_at TIMESTAMP DEFAULT NOW(),
+					    created_us TIMESTAMP DEFAULT NOW(),
+					    updated_us TIMESTAMP DEFAULT NOW(),
 					    PRIMARY KEY (user_id)
 					);
 
@@ -50,17 +58,18 @@ public class ServerApplication {
 					DROP TABLE IF EXISTS question CASCADE;
 					CREATE TABLE question
 					(
-					    question_id       SERIAL,
-					    title             varchar(120),
-					    body              text,
-					    view_count        int       DEFAULT 0,
-					    score             int       DEFAULT 0,
-					    created_at        TIMESTAMP DEFAULT NOW(),
-					    updated_at        TIMESTAMP DEFAULT NOW(),
-					    author_id         int,
-					    correct_answer_id int,
+					    question_id                 SERIAL,
+					    author_id                   int,
+					    correct_answear_id          int,
+					    title                       varchar(120),
+					    body                        text,
+					    view_count                  int       DEFAULT 0,
+					    score                       int       DEFAULT 0,
+					    answear_count               int       DEFAULT 0,
+					    question_created_at         TIMESTAMP DEFAULT NOW(),
+					    question_updated_at          TIMESTAMP DEFAULT NOW(),
 					    PRIMARY KEY (question_id),
-					    CONSTRAINT fk_author FOREIGN KEY (author_id) REFERENCES "user" (user_id)
+					    CONSTRAINT fk_user FOREIGN KEY (author_id) REFERENCES "user" (user_id)
 					);
 
 					DROP TABLE IF EXISTS question_tag CASCADE;
@@ -84,38 +93,41 @@ public class ServerApplication {
 					    CONSTRAINT fk_question_vote_user FOREIGN KEY (user_id) REFERENCES "user" (user_id)
 					);
 
-					DROP TABLE IF EXISTS answer CASCADE;
-					CREATE TABLE answer
+					DROP TABLE IF EXISTS answear CASCADE;
+					CREATE TABLE answear
 					(
-					    answer_id   SERIAL,
-					    question_id int,
-					    body        text,
-					    score       int,
-					    created_at  TIMESTAMP DEFAULT NOW(),
-					    updated_at  TIMESTAMP DEFAULT NOW(),
-					    author_id   int,
-					    PRIMARY KEY (answer_id),
-					    CONSTRAINT fk_author FOREIGN KEY (author_id) REFERENCES "user" (user_id),
+					    answear_id          SERIAL,
+					    question_id         int,
+					    author_id           int,
+					    body                text,
+					    score               int       DEFAULT 0,
+					    answear_created_at  TIMESTAMP DEFAULT NOW(),
+					    answear_updated_at  TIMESTAMP DEFAULT NOW(),
+					    PRIMARY KEY (answear_id),
+					    CONSTRAINT fk_user FOREIGN KEY (author_id) REFERENCES "user" (user_id),
 					    CONSTRAINT fk_question FOREIGN KEY (question_id) REFERENCES question (question_id)
 					);
 
 					ALTER TABLE question
-					    DROP CONSTRAINT IF EXISTS fk_correct_answer;
-					ALTER TABLE question
-					    ADD CONSTRAINT fk_correct_answer
-					        FOREIGN KEY (correct_answer_id)
-					            REFERENCES answer (answer_id);
+					    ADD CONSTRAINT fk_correct_answear
+					        FOREIGN KEY (correct_answear_id)
+					            REFERENCES answear (answear_id);
 
-					DROP TABLE IF EXISTS answer_vote CASCADE;
-					CREATE TABLE answer_vote
+					DROP TABLE IF EXISTS answear_vote CASCADE;
+					CREATE TABLE answear_vote
 					(
-					    answer_id int,
-					    user_id   int,
-					    vote      int,
-					    PRIMARY KEY (answer_id, user_id),
-					    CONSTRAINT fk_answer_vote_answer FOREIGN KEY (answer_id) REFERENCES answer (answer_id),
-					    CONSTRAINT fk_answer_vote_user FOREIGN KEY (user_id) REFERENCES "user" (user_id)
-					);""");
+					    answear_id int,
+					    user_id    int,
+					    vote       int,
+					    PRIMARY KEY (answear_id, user_id),
+					    CONSTRAINT fk_answear_vote_answear FOREIGN KEY (answear_id) REFERENCES answear (answear_id),
+					    CONSTRAINT fk_answear_vote_user FOREIGN KEY (user_id) REFERENCES "user" (user_id)
+					);
+										
+					insert into "user" (first_name, last_name, email, password, job_title)
+					values ('John', 'Doe', 'jhon@gmail.com', '123', 'Developer'),
+						   ('Jane', 'Doe', 'jane@gmail.com', '123', 'Developer'),
+						   ('Jack', 'Doe', 'jack@gmail.com', '123', 'Developer');""");
 			return "Success";
 		} catch (Exception e) {
 			return "Failed: " + e.getMessage();
