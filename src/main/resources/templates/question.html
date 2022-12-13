@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-br" th:include="fragments/model :: model">
+<body>
+  <main th:fragment="content">
+    <form action="/question-new" method="post" th:object="${question}">
+      <label class="form-label mt-3">Titulo:</label>
+      <input type="text" class="form-control" th:field="*{title}" required>
+      <label class="form-label mt-3" >Pergunta:</label>
+      
+      <textarea id="mytextarea" th:field="*{body}"></textarea>
+    
+      <input type="submit" value="Enviar" class="btn btn-primary mt-3">
+    </form>
+  </main>
+</body>
+</html>
