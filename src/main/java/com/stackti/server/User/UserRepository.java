@@ -11,7 +11,7 @@ public class UserRepository {
     JdbcTemplate jdbc;
 
     public void create(User user) {
-        //TODO: Criar regra para não criar usuários repetidos
+        // TODO: Criar regra para não criar usuários repetidos
         jdbc.update("INSERT INTO \"user\"(first_name, last_name, email, password) VALUES (?,?,?,?)",
                 user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword());
     }
