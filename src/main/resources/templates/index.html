@@ -1,46 +1,89 @@
 <!DOCTYPE html>
-<html lang="pt-br" th:include="fragments/model :: model" xmlns:th="http://www.thymeleaf.org">
-
-<body>
-    <main th:fragment="content">
-        <h1 class="my-4">Qual sua dúvida?</h1>
-        <div>TAGs</div>
-        <section>
-            <div th:each="list : ${lista}" id="questions"
-                class="d-flex justify-content-between border-bottom border-dark border-opacity-25 py-3 m-0">
-                <div class="d-flex align-items-center">
-                    <div class="border rounded p-1 text-center" style="width: 60px; height: 60px;">
-                        <p class="m-0" style="font-size: 22px; height: 30px;" th:text="${list.score}"></p>
-                        <p class="m-0" style="font-size: 11px;" th:text="${list.score == 1} ? 'voto':'votos'"></p>
-                    </div>
-                    <div class=" border rounded p-1 text-center mx-2" th:classappend="${list.correct_answer_id != 0} ? 'verde'" style="width: 60px !important; height: 60px;">
-                        <p class="m-0" style="font-size: 22px; height: 30px;"
-                            th:text="${answer.getCountByQuestion(list.question_id)}"></p>
-                        <p class="m-0" style="font-size: 11px;"
-                            th:text="${list.correct_answer_id >= 2} ? 'respostas':'resposta'"></p>
-                    </div>
-                    <div class="border rounded p-1 text-center" style="width: 60px; height: 60px;">
-                        <p class="m-0" style="font-size: 22px; height: 30px;" th:text="${list.view_count}"></p>
-                        <p class="m-0" style="font-size: 11px;" th:text="${list.view_count >= 2} ? 'visitas':'visita'">
-                        </p>
-                    </div>
-                </div>
-                <div class="px-3" style="width: 545px;">
-                    <div class="text-start text-primary text-opacity-75 m-0 my-2" style="cursor: pointer;"
-                        th:onclick="'javascript:url(' + ${list.question_id} + ')'">
-                        <p th:text="${list.title}"></p>
-                    </div>
-                    <div>
-
-                    </div>
-                </div>
-                <div class="d-flex justify-content-end align-items-end" style="width: 255px;">
-                    <div class="text-muted" style="font-size: 12px;">pergunta há <span
-                            th:text="${list.differenceBetweenDates}"></span> atrás por <a
-                            th:href="@{'/user/'+${list.author.user_id}}" th:text="${list.author.firstName}"></a></div>
-                </div>
-            </div>
-        </section>
-    </main>
-</body>
+<html
+    lang="pt-br"
+    th:include="fragments/model :: model"
+    xmlns:th="http://www.thymeleaf.org"
+>
+<main th:fragment="content">
+  <h1 class="my-4">Qual sua dúvida?</h1>
+  <div class="d-flex justify-content-between align-items-center">
+    <a class="btn btn-dark" href="question/new">Faça uma pergunta</a>
+  </div>
+  <section>
+    <div
+        class="d-flex justify-content-between border-bottom border-dark border-opacity-25 py-3 m-0"
+        id="questions"
+        th:each="list : ${lista}"
+    >
+      <div class="d-flex align-items-center">
+        <div
+            class="border rounded p-1 text-center"
+            style="width: 60px; height: 60px"
+        >
+          <p
+              class="m-0"
+              style="font-size: 22px; height: 30px"
+              th:text="${list.score}"
+          ></p>
+          <p
+              class="m-0"
+              style="font-size: 11px"
+              th:text="${list.score == 1} ? 'voto':'votos'"
+          ></p>
+        </div>
+        <div
+            class="border rounded p-1 text-center mx-2"
+            style="width: 60px !important; height: 60px"
+            th:classappend="${list.correct_answear_id != null} ? 'verde'"
+        >
+          <p
+              class="m-0"
+              style="font-size: 22px; height: 30px"
+              th:text="${list.answearCount}"
+          ></p>
+          <p
+              class="m-0"
+              style="font-size: 11px"
+              th:text="${list.correct_answear_id >= 2} ? 'respostas':'resposta'"
+          ></p>
+        </div>
+        <div
+            class="border rounded p-1 text-center"
+            style="width: 60px; height: 60px"
+        >
+          <p
+              class="m-0"
+              style="font-size: 22px; height: 30px"
+              th:text="${list.viewCount}"
+          ></p>
+          <p
+              class="m-0"
+              style="font-size: 11px"
+              th:text="${list.viewCount >= 2} ? 'visitas':'visita'"
+          ></p>
+        </div>
+      </div>
+      <div class="px-3" style="width: 545px">
+        <a
+            class="text-start text-primary text-opacity-75 m-0 my-2"
+            th:href="@{'/question/'+${list.question_id}}"
+            th:text="${list.title}"
+        ></a>
+      </div>
+      <div
+          class="d-flex justify-content-end align-items-end"
+          style="width: 255px"
+      >
+        <div class="text-muted" style="font-size: 12px">
+          pergunta há
+          <span th:text="${list.differenceBetweenDates}"></span> atrás por
+          <a
+              th:href="@{'/user/'+${list.author.user_id}}"
+              th:text="${list.author.firstName}"
+          ></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
 </html>

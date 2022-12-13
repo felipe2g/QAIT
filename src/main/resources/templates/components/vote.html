@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+  <div
+      class="d-flex flex-column"
+      style="width: 40px"
+      th:fragment="vote (answear)"
+  >
+    <a
+        class="btn p-0"
+        th:classappend="${answear.viewerVote == 1} ? 'text-success'"
+        th:href="@{/answear/vote/(answear_id=${answear.answear_id},user_id=1,vote=1)}"
+    >
+      <svg height="36" width="36">
+        <path d="M2 25h32L18 9 2 25Z" fill="currentColor"></path>
+      </svg>
+    </a>
+    <span class="text-center score" th:text="${answear.score}"></span>
+    <a
+        class="btn p-0"
+        th:classappend="${answear.viewerVote == -1} ? 'text-danger'"
+        th:href="@{/answear/vote/(answear_id=${answear.answear_id},user_id=1,vote=-1)}"
+    >
+      <svg height="36" width="36">
+        <path d="M2 11h32L18 27 2 11Z" fill="currentColor" />
+      </svg>
+    </a>
+  </div>
+</html>
