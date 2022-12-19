@@ -35,7 +35,6 @@ public class Question {
     }
 
     public String differenceBetweenDates() {
-        // tenho que arrumar, tem alguns bugs, mas nao atrapalha o serviço
         LocalDateTime fim = LocalDateTime.now(ZoneId.of("America/Sao_Paulo")); // pega data e hora atual
         LocalDateTime inicio;
         if (updated_at==null) {
@@ -43,37 +42,19 @@ public class Question {
         } else {
             inicio = updated_at.toLocalDateTime(); 
         }
-        if(inicio.getYear()!=fim.getYear()) {
-            if (inicio.until(fim, ChronoUnit.YEARS)==0) {
-                return inicio.until(fim, ChronoUnit.MONTHS)+" mes(es)";
-            } else {
-                return inicio.until(fim, ChronoUnit.YEARS)+" ano(s)";
-            }
-        } else if (inicio.getMonthValue()!=fim.getMonthValue()) {
-            if (inicio.until(fim, ChronoUnit.MONTHS)==0) {
-                return inicio.until(fim, ChronoUnit.DAYS)+" dia(s)";
-            } else {
-                return inicio.until(fim, ChronoUnit.MONTHS)+" mes(es)";
-            }
-        } else if (inicio.getDayOfMonth()!=fim.getDayOfMonth()) {
-            if (inicio.until(fim, ChronoUnit.DAYS)==0) {
-                System.out.println(inicio.until(fim, ChronoUnit.DAYS));
-                return inicio.until(fim, ChronoUnit.HOURS)+" hora(s)";
-            } else {
-                return inicio.until(fim, ChronoUnit.DAYS)+" dia(s)";
-            }
-        } else if (inicio.getHour()!=fim.getHour()){
-            if (inicio.until(fim, ChronoUnit.HOURS)==0) {
-                return inicio.until(fim, ChronoUnit.MINUTES)+" minuto(s)";
-            } else {
-                return ""+inicio.until(fim, ChronoUnit.HOURS)+" hora(s)";
-            }
+        if (inicio.until(fim, ChronoUnit.MONTHS)>12) {
+            return inicio.until(fim, ChronoUnit.YEARS)+" ano(s)";
+        } else if (inicio.until(fim, ChronoUnit.DAYS)>30) {
+            return inicio.until(fim, ChronoUnit.MONTHS)+" mes(es)";
+        } else if (inicio.until(fim, ChronoUnit.HOURS)>24) {
+            return inicio.until(fim, ChronoUnit.DAYS)+" dia(s)";
+        } else if (inicio.until(fim, ChronoUnit.MINUTES)>60) {
+            return inicio.until(fim, ChronoUnit.HOURS)+" hora(s)";
+        } else if (inicio.until(fim, ChronoUnit.SECONDS)>60) {
+            return inicio.until(fim, ChronoUnit.MINUTES)+" minuto(s)";
         } else {
-            if (inicio.until(fim, ChronoUnit.MINUTES)==0) {
-                return inicio.until(fim, ChronoUnit.SECONDS)+" segundo(s)";
-            } else {
-                return inicio.until(fim, ChronoUnit.MINUTES)+" minuto(s)";
-            }
+            return inicio.until(fim, ChronoUnit.SECONDS)+" segundo(s)";
         }
+        
     }
 }
