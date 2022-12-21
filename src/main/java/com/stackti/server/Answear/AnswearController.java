@@ -18,7 +18,6 @@ public class AnswearController {
 
     @PostMapping("/new")
     public String newAnswear(Answear answear) {
-        System.out.println(answear);
         repository.save(answear);
         questionRepository.updateAnswearCount(answear.getQuestion_id());
         return "redirect:/question/" + answear.getQuestion_id();

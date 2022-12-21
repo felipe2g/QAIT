@@ -19,12 +19,15 @@ public class QuestionController {
     AnswearRepository answer;
 
     @GetMapping("/{id}")
-    public String questionView(@PathVariable Long id, Model model) {
+    public String questionView(@PathVariable Long id, Model model, HttpSession session) {
         Answear newAnswear = new Answear();
+        long user_id = ((User) session.getAttribute("user")).user_id;
+
         newAnswear.setQuestion_id(id);
+        newAnswear.getAuthor().setUser_id(user_id);
 
         model.addAttribute("question", repository.findById(id));
-        model.addAttribute("answears", answer.findAllByQuestionIdAndViewerIdOrderByScore(id, 1L));
+        model.addAttribute("answears", answer.findAllByQuestionIdAndViewerIdOrderByScore(id, user_id));
         model.addAttribute("newAnswear", newAnswear);
         repository.updateVisitCount(id);
         return "viewquestion";
