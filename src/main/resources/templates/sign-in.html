@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR" th:include="fragments/model :: model" xmlns:th="http://www.thymeleaf.org">
+<main th:fragment="content">
+    <div class="d-flex justify-content-center">
+        <form action="/sign-in" class="w-50" method="post" th:object="${user}">
+            <h1 class="my-3">Entrar</h1>
+            <div class="alert alert-danger" role="alert" th:if="${error}">
+                Email ou senha incorreto
+            </div>
+            <div class="form-group">
+                <label class="mt-2" for="email">Email</label>
+                <input class="form-control" id="email" placeholder="E-mail" required th:field="*{email}" type="text">
+
+                <label class="mt-2" for="password">Senha</label>
+                <input class="form-control" id="password" placeholder="Senha" required
+                       th:field="*{password}" type="password">
+            </div>
+            <button class="btn btn-primary mt-2">Entrar</button>
+        </form>
+    </div>
+</main>
+</html>
