@@ -11,13 +11,10 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class User {
     public Long user_id;
-    public String firstName;
-    public String lastName;
+    public String name;
     public String email;
     public String password;
-    public int role;
-    public String jobTitle;
     public int rate;
-    public Timestamp createAt;
-    public Timestamp updateAt;
+    public Timestamp createdAt;
+    public Timestamp updatedAt;
 }

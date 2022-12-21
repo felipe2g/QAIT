@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR" th:include="fragments/model :: model" xmlns:th="http://www.thymeleaf.org">
+
+
+<main th:fragment="content">
+  <div class="d-flex justify-content-center my-5">
+    <div class="d-flex flex-row w-75">
+      <div>
+        <img class="rounded" th:src="@{/user.png}" alt="user picture" />
+      </div>
+      <div class="d-flex justify-content-center">
+        <form class="w-75" method="post" th:object="${user}" action="sign-up">
+          <div class="form-group">
+            <div class="d-flex flex-row">
+              <div class="w-50">
+                <label for="firstName">Primeiro Nome</label>
+                <input type="text" class="form-control" id="firstName" placeholder="Primeiro nome"
+                  th:field="*{firstName}" required value="Usuário">
+              </div>
+              <div class="w-50 ms-2">
+                <label for="secondName">Segundo Nome</label>
+                <input type="text" class="form-control" id="secondName" placeholder="Segundo nome"
+                  th:field="*{lastName}" required value="Comum">
+              </div>
+            </div>
+
+
+            <label for="email" class="mt-2">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Email" th:field="*{email}" required
+              value="usuario@email.com">
+
+            <label for="password" class="mt-2">Senha</label>
+            <input type="password" class="form-control" id="password" placeholder="Senha" required autocomplete="off">
+
+            <label for="passwordAgain" class="mt-2">Senha novamente</label>.
+            <input type="password" class="form-control" id="passwordAgain" placeholder="Senha Novamente" required
+              autocomplete="off">
+          </div>
+          <button class="btn btn-primary mt-2">Registrar</button>
+        </form>
+      </div>
+    </div>
+</main>
+
+</html>

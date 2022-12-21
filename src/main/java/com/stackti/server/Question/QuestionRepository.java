@@ -1,6 +1,7 @@
 package com.stackti.server.Question;
 
 import com.stackti.server.User.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -11,11 +12,10 @@ import java.util.List;
 
 @Repository
 public class QuestionRepository {
-    final JdbcTemplate jdbc;
-
-    public QuestionRepository(JdbcTemplate jdbc) {
-        this.jdbc = jdbc;
-    }
+    final String selectBase = "select * from question join \"user\" u on u.user_id = question.author_id ";
+    final String orderBase = " order by question_created_at desc;";
+    @Autowired
+    JdbcTemplate jdbc;
 
     public Question rowMapper(ResultSet rs, int rowNum) throws SQLException {
         Question question = BeanPropertyRowMapper.newInstance(Question.class).mapRow(rs, rowNum);
@@ -23,16 +23,25 @@ public class QuestionRepository {
         return question;
     }
 
-    public List<Question> findAllSortedByDate() {
-        return jdbc.query("select * from question join \"user\" u on u.user_id = question.author_id order by question_updated_at desc;", this::rowMapper);
+    public List<Question> findAll(String search) {
+        if (search == null) {
+            return jdbc.query(selectBase + orderBase, this::rowMapper);
+        }
+
+        String query = "%" + search + "%";
+        return jdbc.query(selectBase + " where body ilike ? or title ilike ?" + orderBase, this::rowMapper, query, query);
     }
 
     public Question findById(long id) {
-        return jdbc.queryForObject("select * from question join \"user\" u on u.user_id = question.author_id where question_id = ? ", this::rowMapper, id);
+        return jdbc.queryForObject(selectBase + " where question_id = ?;", this::rowMapper, id);
     }
 
     public Long findQuestionIdByAnswearId(long id) {
         return jdbc.queryForObject("select question_id from answear where answear_id = ?", Long.class, id);
+    }
+
+    public List<Question> findAllByAuthorId(long id) {
+        return jdbc.query(selectBase + " where author_id = ?" + orderBase, this::rowMapper, id);
     }
 
     public void updateVisitCount(long id) {

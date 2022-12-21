@@ -1,22 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-BR" th:include="fragments/model :: model" xmlns:th="http://www.thymeleaf.org">
-
-
 <main th:fragment="content">
     <div class="d-flex justify-content-center my-5">
         <div class="d-flex flex-row w-75">
-            <div>
-                <img class="rounded" th:src="@{user.png}" alt="user picture" />
-            </div>
             <div class="d-flex flex-column ms-4">
                 <div class="my-2 d-flex flex-column">
-                    <span class="text fs-4" style="line-height: 18px;">Diana Prince</span>
-                    <span class="text-primary">Desenvolvedora Senior</span>
+                    <span class="text-primary" th:text="${user.name}"></span>
                 </div>
                 <div class="mb-2">
                     <span style="font-size: 10px;" class="text-muted">REPUTAÇÃO</span>
                     <div class="d-flex flex-row align-items-center">
-                        <span class="me-1">4,1</span>
+                        <span class="me-1" th:text="${user.rate}"></span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-star-fill text-primary" viewBox="0 0 16 16">
                             <path
@@ -39,5 +33,4 @@
         </div>
     </div>
 </main>
-
 </html>
