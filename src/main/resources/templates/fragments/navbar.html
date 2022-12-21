@@ -1,20 +1,29 @@
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class=" navbar-brand px-4" href="/"><img th:src="@{/logo.svg}" /></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse d-md-flex" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto d-md-flex justify-content-md-around w-100">
-            <form class="d-flex flex-row form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+<!doctype html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar">
+    <div class="container-fluid">
+        <a class="navbar-brand px-4" href="/"><img th:src="@{/logo.svg}" /></a>
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler"
+                data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form action="/" class="d-flex flex-row form-inline my-2 my-lg-0 col-lg-5 mx-auto" method="get">
+                <input class="form-control mr-sm-2" name="q" placeholder="Search"
+                       th:value="${#request.getParameter('q')}" type="search"
+                >
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
-            <li>
-                <a href="/sign-up"><button type="button" class="btn btn-primary">Registrar</button></a>
-                <a href="/login"><button type="button" class="btn btn-link px-4">Login</button></a>
-            </li>
-        </ul>
+            <div class="gap-1">
+                <a href="/sign-up">
+                    <button class="btn btn-primary" type="button">Registrar</button>
+                </a>
+                <a href="/login">
+                    <button class="btn btn-outline-primary" type="button">Login</button>
+                </a>
+            </div>
+        </div>
     </div>
 </nav>
+</html>
