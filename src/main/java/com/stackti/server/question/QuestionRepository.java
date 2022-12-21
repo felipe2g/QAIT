@@ -2,7 +2,6 @@ package com.stackti.server.question;
 
 import com.stackti.server.User.User;
 import com.stackti.server.question.tag.TagRepository;
-import com.stackti.server.question.voto.VotoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,20 +15,16 @@ import java.util.List;
 public class QuestionRepository {
     @Autowired
     JdbcTemplate db;
-    @Autowired 
-    VotoRepository voto;
+
     @Autowired
     TagRepository tag;
 
-    public void questionInsert(Question question) {
-        int codQuestion = db.queryForObject(
-                "insert into question (title, body, view_count, score, updated_at, author_id,correct_answer_id) values (?,?,?,?,?,?,?) returning question_id;",  Integer.class,
-                new Object[] {question.getTitle(), question.getBody(), question.getView_count(),
-                    question.getScore(), question.getUpdated_at(), 1, null}
-                );
-        
-        voto.insertVote(codQuestion);
-        //tag.insertTags(codQuestion, vet TAGs);
+    public int questionInsert(Question question) {
+        return db.queryForObject(
+                "insert into question (title, body, view_count, score, updated_at, author_id,correct_answer_id) values (?,?,?,?,?,?,?) returning question_id;",
+                Integer.class,
+                new Object[] { question.getTitle(), question.getBody(), question.getView_count(),
+                        question.getScore(), question.getUpdated_at(), 1, null });
 
     }
 

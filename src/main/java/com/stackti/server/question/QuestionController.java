@@ -6,8 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.stackti.server.answer.AnswerRepository;
+import com.stackti.server.question.voto.VotoRepository;
 
 import java.util.List;
+
 
 @Controller
 public class QuestionController {
@@ -35,9 +37,12 @@ public class QuestionController {
         model.addAttribute("answer", answer);
         return "index";
     }
+    @Autowired 
+    VotoRepository voto;
     @PostMapping("question-new")
     public String questioNew(Question question) {
-        repository.questionInsert(question);
+        int idQuestion = repository.questionInsert(question);
+        voto.insertVote(idQuestion);
         return "redirect:/question-new";
     }
 }
