@@ -27,7 +27,7 @@ public class AnswearRepository {
     }
 
     public List<Answear> findAllByQuestionIdAndViewerIdOrderByScore(long question_id, long viewer_id) {
-        String sql = "SELECT a.answear_id as answear_id, a.question_id, a.author_id as user_id, u.first_name, a.body, a.score, a.answear_created_at, a.answear_updated_at, av.vote FROM answear a join \"user\" u on u.user_id = a.author_id left join answear_vote av on a.answear_id = av.answear_id and av.user_id = ? WHERE question_id = ? order by a.score desc;";
+        String sql = "SELECT a.answear_id as answear_id, a.question_id, a.author_id as user_id, u.name, a.body, a.score, a.answear_created_at, a.answear_updated_at, av.vote FROM answear a join \"user\" u on u.user_id = a.author_id left join answear_vote av on a.answear_id = av.answear_id and av.user_id = ? WHERE question_id = ? order by a.score desc;";
         return jdbc.query(sql, this::rowMapper, viewer_id, question_id);
     }
 

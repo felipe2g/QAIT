@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <div class="card" th:fragment="answear (post)">
-  <div class="card-body">
-    <div class="row g-0">
-      <div th:replace="components/vote :: vote (${post})"></div>
-      <div class="col ps-3">
-        <div class="card-text" th:utext="${post.body}"></div>
-      </div>
+    <div class="card-body">
+        <div class="row g-0">
+            <div th:replace="components/vote :: vote (${post})"></div>
+            <div class="col ps-3">
+                <div class="card-text" th:utext="${post.body}"></div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="card-footer">
-    <p class="card-text">
-      Posted by
-      <a
-          class="card-link link-info"
-          th:href="@{'/user/'+${post.author.user_id}}"
-          th:text="${post.author.firstName}"
-      ></a>
-    </p>
-  </div>
+    <div class="card-footer">
+        <p class="card-text">
+            Posted by
+            <a
+                class="card-link link-info"
+                th:href="@{'/user/'+${post.author.user_id}}"
+                th:text="${post.author.name}"
+            ></a>
+            <a class="btn btn-success btn-sm"
+               th:href="@{/question/correct/(answear_id=${post.answear_id},question_id=${question.question_id})}"
+               th:if="${session.user.user_id == question.author.user_id}">
+                Correct
+            </a>
+        </p>
+    </div>
 </div>
 </html>
