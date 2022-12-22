@@ -5,7 +5,7 @@
     xmlns:th="http://www.thymeleaf.org"
 >
 <main th:fragment="content">
-  <h1 class="my-4">Qual sua dúvida?</h1>
+  <h1 class="my-4" th:text="|${session.user.name}, Qual sua dúvida?|"></h1>
   <div class="d-flex justify-content-between align-items-center">
     <a class="btn btn-dark" href="question/new">Faça uma pergunta</a>
   </div>
