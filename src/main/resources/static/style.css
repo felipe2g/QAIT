@@ -1,7 +1,3 @@
-main {
-    width: 1000px;
-    margin: auto;
-}
 .flex-container1 {
     display: flex;
     justify-content: space-between;
@@ -20,6 +16,10 @@ main {
 
 .verde {
     color: white;
-    border-color:rgb(48, 164, 48) !important;
+    border-color: rgb(48, 164, 48) !important;
     background-color: rgb(48, 164, 48);
+}
+
+.tox-notifications-container {
+    display: none;
 }

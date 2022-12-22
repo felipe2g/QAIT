@@ -29,7 +29,7 @@ public class QuestionRepository {
         }
 
         String query = "%" + search + "%";
-        return jdbc.query(selectBase + " where body ilike ? or title ilike ?" + orderBase, this::rowMapper, query, query);
+        return jdbc.query(selectBase + " where body like ? or title like ?" + orderBase, this::rowMapper, query, query);
     }
 
     public Question findById(long id) {
@@ -48,12 +48,24 @@ public class QuestionRepository {
         jdbc.update("UPDATE question SET view_count = view_count+1 WHERE question_id = ?;", id);
     }
 
-    public void updateAnswearCount(long id) {
-        jdbc.update("UPDATE question SET answear_count = answear_count+1 WHERE question_id = ?;", id);
+    public void updateAnswearCount(long id, int value) {
+        jdbc.update("UPDATE question SET answear_count = answear_count + ? WHERE question_id = ?;", value, id);
     }
 
     public void updateCorrectAnswear(long QuestionId, long AnswearId) {
-        jdbc.update("UPDATE question SET correct_answear_id = ? WHERE question_id = ?;", AnswearId, QuestionId);
+        if (!verifyAndDeleteCorrectAnswear(QuestionId, AnswearId)) {
+            jdbc.update("UPDATE question SET correct_answear_id = ? WHERE question_id = ?;", AnswearId, QuestionId);
+        }
+    }
+
+    public boolean verifyAndDeleteCorrectAnswear(long question_id, long answear_id) {
+        try {
+            jdbc.queryForObject("select question_id from question where question_id = ? and correct_answear_id = ?", Long.class, question_id, answear_id);
+            jdbc.update("UPDATE question SET correct_answear_id = null WHERE question_id = ?;", question_id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public void save(Question question) {

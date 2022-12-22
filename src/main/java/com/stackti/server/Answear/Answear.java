@@ -1,6 +1,7 @@
 package com.stackti.server.Answear;
 
 import com.stackti.server.User.User;
+import com.stackti.server.Util.DifferenceBetweenDates;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -20,5 +21,9 @@ public class Answear {
 
     public Answear() {
         author = new User();
+    }
+
+    public String getAnswearUpdatedAt() {
+        return DifferenceBetweenDates.differenceBetweenDates(answearUpdatedAt);
     }
 }

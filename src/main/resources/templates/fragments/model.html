@@ -20,7 +20,9 @@
 <body>
 <nav th:insert="~{fragments/navbar :: navbar}"></nav>
 
-<main th:replace="this :: content"></main>
+<div class="container">
+    <main th:replace="this :: content"></main>
+</div>
 
 </body>
 </html>
