@@ -52,6 +52,10 @@ public class QuestionRepository {
         jdbc.update("UPDATE question SET answear_count = answear_count+1 WHERE question_id = ?;", id);
     }
 
+    public void updateCorrectAnswear(long QuestionId, long AnswearId) {
+        jdbc.update("UPDATE question SET correct_answear_id = ? WHERE question_id = ?;", AnswearId, QuestionId);
+    }
+
     public void save(Question question) {
         jdbc.update("insert into question (title, body, author_id) values (?, ?, ?);", question.getTitle(), question.getBody(), question.getAuthor().getUser_id());
     }
