@@ -13,18 +13,13 @@
                     th:value="${#request.getParameter('q')}" type="search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
-            <div th:if="${session.containsKey('user')" }>
-                <div class="gap-1">
-                    <a href="/sign-up">
-                        <button class="btn btn-primary" type="button">Registrar</button>
-                    </a>
-                    <a href="/sign-in">
-                        <button class="btn btn-outline-primary" type="button">Login</button>
-                    </a>
-                </div>
-            </div>
-            <div th:unless="${session.containsKey('user')" }>
-                <p>Bem vindo!</p>
+            <div class="gap-1">
+                <a href="/sign-up">
+                    <button class="btn btn-primary" type="button">Registrar</button>
+                </a>
+                <a href="/sign-in">
+                    <button class="btn btn-outline-primary" type="button">Login</button>
+                </a>
             </div>
         </div>
     </div>
