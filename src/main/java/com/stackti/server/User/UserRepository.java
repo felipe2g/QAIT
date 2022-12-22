@@ -18,12 +18,12 @@ public class UserRepository {
     }
 
     public User findById(long id) {
-        return jdbc.queryForObject("SELECT * FROM \"user\" WHERE user_id = ?", this::rowMapper, id);
+        return jdbc.queryForObject("SELECT * FROM user WHERE user_id = ?", this::rowMapper, id);
     }
 
     public User findByEmailAndPassword(String email, String password) {
         try {
-            return jdbc.queryForObject("SELECT * FROM \"user\" WHERE email = ? AND password = ?", this::rowMapper, email, password);
+            return jdbc.queryForObject("SELECT * FROM user WHERE email = ? AND password = ?", this::rowMapper, email, password);
         } catch (Exception e) {
             return null;
         }
@@ -31,7 +31,7 @@ public class UserRepository {
 
     public boolean create(User user) {
         try {
-            jdbc.update("INSERT INTO \"user\" (name, email, password) VALUES (?, ?, ?);", user.getName(), user.getEmail(), user.getPassword());
+            jdbc.update("INSERT INTO user (name, email, password) VALUES (?, ?, ?);", user.getName(), user.getEmail(), user.getPassword());
             return true;
         } catch (Exception e) {
             return false;
