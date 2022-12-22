@@ -27,25 +27,28 @@ public class AnswearRepository {
     }
 
     public List<Answear> findAllByQuestionIdAndViewerIdOrderByScore(long question_id, long viewer_id) {
-        String sql = "SELECT a.answear_id as answear_id, a.question_id, a.author_id as user_id, u.name, a.body, a.score, a.answear_created_at, a.answear_updated_at, av.vote FROM answear a join \"user\" u on u.user_id = a.author_id left join answear_vote av on a.answear_id = av.answear_id and av.user_id = ? WHERE question_id = ? order by a.score desc;";
+        String sql = "SELECT a.answear_id as answear_id, a.question_id, a.author_id as user_id, u.name, a.body, a.score, a.answear_created_at, a.answear_updated_at, av.vote FROM answear a join user u on u.user_id = a.author_id left join answear_vote av on a.answear_id = av.answear_id and av.user_id = ? WHERE question_id = ? order by a.score desc;";
         return jdbc.query(sql, this::rowMapper, viewer_id, question_id);
     }
 
     public void vote(long answear_id, long user_id, int vote) {
         Integer oldVote = null;
         try {
-            oldVote = jdbc.queryForObject("SELECT vote FROM answear_vote WHERE user_id = ? and answear_id = ?", Integer.class, user_id, answear_id);
+            oldVote = jdbc.queryForObject("SELECT vote FROM answear_vote WHERE user_id = ? and answear_id = ?",
+                    Integer.class, user_id, answear_id);
         } catch (Exception ignored) {
         }
 
         if (oldVote == null) {
-            jdbc.update("INSERT INTO answear_vote (answear_id, user_id, vote) VALUES (?, ?, ?)", answear_id, user_id, vote);
+            jdbc.update("INSERT INTO answear_vote (answear_id, user_id, vote) VALUES (?, ?, ?)", answear_id, user_id,
+                    vote);
         } else {
             if (oldVote == vote) {
                 jdbc.update("DELETE FROM answear_vote WHERE user_id = ? and answear_id = ?", user_id, answear_id);
                 vote *= -1;
             } else {
-                jdbc.update("UPDATE answear_vote SET vote = ? WHERE user_id = ? and answear_id = ?", vote, user_id, answear_id);
+                jdbc.update("UPDATE answear_vote SET vote = ? WHERE user_id = ? and answear_id = ?", vote, user_id,
+                        answear_id);
                 vote *= 2;
             }
         }
@@ -54,11 +57,13 @@ public class AnswearRepository {
     }
 
     public void save(Answear answear) {
-        jdbc.update("INSERT INTO answear (question_id, author_id, body) VALUES (?, ?, ?)", answear.getQuestion_id(), answear.getAuthor().getUser_id(), answear.getBody());
+        jdbc.update("INSERT INTO answear (question_id, author_id, body) VALUES (?, ?, ?)", answear.getQuestion_id(),
+                answear.getAuthor().getUser_id(), answear.getBody());
     }
 
     public void update(Answear answear) {
-        jdbc.update("UPDATE answear SET body = ?, answear_updated_at = NOW() WHERE answear_id = ?", answear.getBody(), answear.getAuthor().getUser_id());
+        jdbc.update("UPDATE answear SET body = ?, answear_updated_at = NOW() WHERE answear_id = ?", answear.getBody(),
+                answear.getAuthor().getUser_id());
     }
 
     public void delete(long id) {

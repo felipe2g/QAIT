@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public class QuestionRepository {
-    final String selectBase = "select * from question join \"user\" u on u.user_id = question.author_id ";
+    final String selectBase = "select * from question join user u on u.user_id = question.author_id ";
     final String orderBase = " order by question_created_at desc;";
     @Autowired
     JdbcTemplate jdbc;

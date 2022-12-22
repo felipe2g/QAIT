@@ -4,15 +4,13 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="/"><img th:src="@{/logo.svg}" /></a>
         <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-                class="navbar-toggler"
-                data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+            class="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <form action="/" class="d-flex flex-row form-inline my-2 my-lg-0 col-lg-5 mx-auto" method="get">
                 <input class="form-control mr-sm-2" name="q" placeholder="Search"
-                       th:value="${#request.getParameter('q')}" type="search"
-                >
+                    th:value="${#request.getParameter('q')}" type="search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
             <div class="gap-1">
@@ -26,4 +24,5 @@
         </div>
     </div>
 </nav>
+
 </html>
