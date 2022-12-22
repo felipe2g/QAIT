@@ -19,7 +19,7 @@ public class AnswearController {
     @PostMapping("/new")
     public String newAnswear(Answear answear) {
         repository.save(answear);
-        questionRepository.updateAnswearCount(answear.getQuestion_id());
+        questionRepository.updateAnswearCount(answear.getQuestion_id(), 1);
         return "redirect:/question/" + answear.getQuestion_id();
     }
 
@@ -27,5 +27,14 @@ public class AnswearController {
     public String upvote(@RequestParam Long answear_id, @RequestParam Long user_id, @RequestParam int vote) {
         repository.vote(answear_id, user_id, vote);
         return "redirect:/question/" + questionRepository.findQuestionIdByAnswearId(answear_id);
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam Long answear_id) {
+        Long question_id = questionRepository.findQuestionIdByAnswearId(answear_id);
+        questionRepository.updateAnswearCount(question_id, -1);
+        questionRepository.verifyAndDeleteCorrectAnswear(question_id, answear_id);
+        repository.delete(answear_id);
+        return "redirect:/question/" + question_id;
     }
 }

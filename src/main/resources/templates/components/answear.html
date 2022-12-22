@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-<div class="card" th:fragment="answear (post)">
+<div class="card" th:fragment="answear (post, question)">
     <div class="card-body">
         <div class="row g-0">
             <div th:replace="components/vote :: vote (${post})"></div>
@@ -9,20 +9,32 @@
             </div>
         </div>
     </div>
-    <div class="card-footer">
-        <p class="card-text">
-            Posted by
+    <div class="card-footer d-flex">
+        <p class="card-text text-muted">
+            <span
+                class="badge bg-success"
+                th:if="${question.correct_answear_id == post.answear_id}">Correta
+            </span>
             <a
                 class="card-link link-info"
                 th:href="@{'/user/'+${post.author.user_id}}"
                 th:text="${post.author.name}"
             ></a>
+            <span> há </span>
+            <span th:text="${post.answearUpdatedAt}"></span> atrás
+        </p>
+        <div class="ms-auto">
             <a class="btn btn-success btn-sm"
                th:href="@{/question/correct/(answear_id=${post.answear_id},question_id=${question.question_id})}"
                th:if="${session.user.user_id == question.author.user_id}">
-                Correct
+                Correto
             </a>
-        </p>
+            <a class="btn btn-danger btn-sm"
+               th:href="@{/answear/delete/(answear_id=${post.answear_id})}"
+               th:if="${session.user.user_id == post.author.user_id}">
+                Deletar
+            </a>
+        </div>
     </div>
 </div>
 </html>

@@ -9,22 +9,26 @@
     <h1 class="my-4" th:text="${question.title}"></h1>
     <p class="border-bottom pb-2" style="font-size: 12px">
       Pergunta há
-      <span th:text="${question.differenceBetweenDates}"></span> atrás
+      <span th:text="${question.questionUpdatedAt}"></span> atrás por
+      <a
+          th:href="@{'/user/'+${question.author.user_id}}"
+          th:text="${question.author.name}"
+      ></a>
     </p>
   </section>
 
   <div class="border-bottom pb-2" th:utext="${question.body}"></div>
 
+  <div class="my-3" th:each="answear : ${answears}">
+    <div th:replace="components/answear :: answear (${answear}, ${question})"></div>
+  </div>
+
   <form action="/answear/new" method="post" th:object="${newAnswear}">
     <input th:field="*{author.user_id}" type="hidden" />
     <input th:field="*{question_id}" type="hidden" />
-    <label class="form-label mt-3">Your Answer</label>
+    <label class="form-label mt-3">Sua resposta</label>
     <textarea id="mytextarea" th:field="*{body}"></textarea>
     <input class="btn btn-primary mt-3" type="submit" value="Enviar" />
   </form>
-
-  <div th:each="answear : ${answears}">
-    <div th:replace="components/answear :: answear (${answear})"></div>
-  </div>
 </main>
 </html>
